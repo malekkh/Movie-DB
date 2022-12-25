@@ -94,3 +94,32 @@ app.get('/movies/read/id/:id', (req, res) => {
     res.status(404).json({ status: 404, error: true, message: `the movie ${id} does not exist` })
   }
 })
+
+
+app.get('/movies/add', (req, res) => {
+  // Extract the movie title, year, and rating from the request query
+  const title = req.query.title
+  const year = req.query.year
+  const rating = req.query.rating
+
+  // Check if the title and year are provided
+  if (!title || !year) {
+    // If either the title or year is missing, send a 403 status code and an error message
+    res.status(403).json({ status: 403, error: true, message: 'you cannot create a movie without providing a title and a year' })
+  } else {
+    // If the title and year are both provided, check if the year is a 4-digit number
+    if (year.length !== 4 || isNaN(year)) {
+      // If the year is not a 4-digit number, send a 403 status code and an error message
+      res.status(403).json({ status: 403, error: true, message: 'you cannot create a movie without providing a valid year' })
+    } else {
+      // If the year is a 4-digit number, create a new movie object
+      const newMovie = { title, year, rating: rating || 4 }
+
+      // Add the new movie to the movies array
+      movies.push(newMovie)
+
+      // Send the updated list of movies as the response
+      res.status(200).json({ status: 200, data: movies })
+    }
+  }
+})
