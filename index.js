@@ -11,3 +11,17 @@ app.listen(port, () => {
 app.get('/', (req, res) => {
   res.send('ok');
 });
+// Create an express simple API
+app.get('/test', (req, res) => {
+  res.json({ status: 200, message: 'ok' });
+});
+app.get('/time', (req, res) => {
+  const currentTime = new Date();
+  const hours = currentTime.getHours();
+  const minutes = currentTime.getMinutes();
+
+  res.json({
+    status: 200,
+    message: `${hours}:${minutes}`
+  });
+});
