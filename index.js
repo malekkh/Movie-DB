@@ -55,14 +55,13 @@ app.get('/search', (req, res) => {
 });
 //  Set up the basis for CRUD
 const movies = [
-       { title: 'Jaws', year: 1975, rating: 8 },
-       { title: 'Avatar', year: 2009, rating: 7.8 },
-       { title: 'Brazil', year: 1985, rating: 8 },
-       { title: 'الإرهاب والكباب‎', year: 1992, rating: 6.2 }
+       { id:1,title: 'Jaws', year: 1975, rating: 8 },
+       { id:2,title: 'Avatar', year: 2009, rating: 7.8 },
+       { id:3,title: 'Brazil', year: 1985, rating: 8 },
+       { id:4,title: 'الإرهاب والكباب‎', year: 1992, rating: 6.2 }
    ]
 
 app.get('/movies/read', (req, res) => {
-  // Return a response with a status of 200 and the list of movies as the data
   res.status(200).json({ status: 200, data: movies })
 })
   // Sort the movies by date
@@ -79,4 +78,19 @@ app.get('/movies/read/by-rating', (req, res) => {
 app.get('/movies/read/by-title', (req, res) => {
   // Return a response with a status of 200 and the sorted list of movies as the data
   res.status(200).json({ status: 200, data: movies.sort((a,b)=>a.title.charCodeAt(0)-b.title.charCodeAt(0)) })
+})
+
+app.get('/movies/read/id/:id', (req, res) => {
+  const id = parseInt(req.params.id,10)
+
+  // Find the movie with the matching id
+  const movie = movies.find(movie => movie.id === id)
+
+  // If the movie was found, send it back as the response
+  if (movie) {
+    res.status(200).json({ status: 200, data: movie })
+  } else {
+    // If the movie was not found, send a 404 status code and a "not found" message
+    res.status(404).json({ status: 404, error: true, message: `the movie ${id} does not exist` })
+  }
 })
