@@ -65,3 +65,18 @@ app.get('/movies/read', (req, res) => {
   // Return a response with a status of 200 and the list of movies as the data
   res.status(200).json({ status: 200, data: movies })
 })
+  // Sort the movies by date
+app.get('/movies/read/by-date', (req, res) => {
+  // Return a response with a status of 200 and the sorted list of movies as the data
+  res.status(200).json({ status: 200, data: movies.sort((a,b)=>a.year-b.year) })
+})
+ // Sort the movies by rating
+app.get('/movies/read/by-rating', (req, res) => {
+  // Return a response with a status of 200 and the sorted list of movies as the data
+  res.status(200).json({ status: 200, data: movies.sort((a,b)=>b.rating-a.rating) })
+})
+ // Sort the movies by title
+app.get('/movies/read/by-title', (req, res) => {
+  // Return a response with a status of 200 and the sorted list of movies as the data
+  res.status(200).json({ status: 200, data: movies.sort((a,b)=>a.title.charCodeAt(0)-b.title.charCodeAt(0)) })
+})
