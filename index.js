@@ -138,3 +138,24 @@ app.get('/movies/delete/:id', (req, res) => {
     res.json({ movies });
   }
 });
+// update 
+app.get('/movies/update/:id', (req, res) => {
+  const id = req.params.id;
+  const movieIndex = movies.findIndex((movie) => movie.id == id);
+  if (movieIndex === -1) {
+    res.status(404).json({
+      status: 404,
+      error: true,
+      message: `the movie ${id} does not exist`,
+    });
+  } else {
+    const { title, rating } = req.query;
+    if (title) {
+      movies[movieIndex].title = title;
+    }
+    if (rating) {
+      movies[movieIndex].rating = rating;
+    }
+    res.json({ movies });
+  }
+});
