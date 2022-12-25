@@ -123,3 +123,18 @@ app.get('/movies/add', (req, res) => {
     }
   }
 })
+
+app.get('/movies/delete/:id', (req, res) => {
+  const id = req.params.id;
+  const index = movies.findIndex((movie) => movie.id == id);
+  if (index === -1) {
+    res.status(404).json({
+      status: 404,
+      error: true,
+      message: `the movie ${id} does not exist`,
+    });
+  } else {
+    movies.splice(index, 1);
+    res.json({ movies });
+  }
+});
