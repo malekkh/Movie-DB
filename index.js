@@ -1,9 +1,6 @@
 const express = require('express');
-
 const app = express();
-
 const port = 3000;
-
 app.listen(port, () => {
   console.log(`Server listening on port ${port}`);
 });
@@ -96,7 +93,7 @@ app.get('/movies/read/id/:id', (req, res) => {
 })
 
 
-app.get('/movies/add', (req, res) => {
+app.post('/movies/add', (req, res) => {
   // Extract the movie title, year, and rating from the request query
   const title = req.query.title
   const year = req.query.year
@@ -124,7 +121,7 @@ app.get('/movies/add', (req, res) => {
   }
 })
 
-app.get('/movies/delete/:id', (req, res) => {
+app.delete('/movies/delete/:id', (req, res) => {
   const id = req.params.id;
   const index = movies.findIndex((movie) => movie.id == id);
   if (index === -1) {
@@ -139,7 +136,7 @@ app.get('/movies/delete/:id', (req, res) => {
   }
 });
 // update 
-app.get('/movies/update/:id', (req, res) => {
+app.put('/movies/update/:id', (req, res) => {
   const id = req.params.id;
   const movieIndex = movies.findIndex((movie) => movie.id == id);
   if (movieIndex === -1) {
